@@ -13,28 +13,26 @@ CREATE TABLE users (
     UNIQUE(email)
 );
 
---Updates updated_at timestamp when called
-CREATE FUNCTION update_updated_at_user_task()
-RETURNS TRIGGER AS $$
-BEGIN
-    NEW.updated_at = now();
-    RETURN NEW;
-END;
-$$ language 'plsql';
+-- --Updates updated_at timestamp when called
+-- CREATE FUNCTION update_updated_at_user_task()
+-- RETURNS TRIGGER AS $$
+-- BEGIN
+--     NEW.updated_at = now();
+--     RETURN NEW;
+-- END;
+-- $$ language 'plsql';
 
---Runs the update_updated_at_user_task function when triggered
-CREATE TRIGGER update_user_task_updated_at
-    BEFORE UPDATE
-    ON
-        user_task
-    FOR EACH ROW
-EXECUTE PROCEDURE update_updated_at_user_task();
+-- --Runs the update_updated_at_user_task function when triggered
+-- CREATE TRIGGER update_user_task_updated_at
+--     BEFORE UPDATE
+--     ON
+--         user_task
+--     FOR EACH ROW
+-- EXECUTE PROCEDURE update_updated_at_user_task();
 
 
 SELECT*FROM users;
 
 INSERT INTO users (username, email, password) VALUES ('kevin123', 'kevin123@email.com', '123456');
 
---psql -U postgres
---\c katmart
---\dt
+

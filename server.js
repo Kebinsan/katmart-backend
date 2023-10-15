@@ -1,10 +1,11 @@
 const express = require("express");
+//DEPENDENCIES
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const cors = require("cors");
 
-const { pool } = require("./db/dbConfig");
+//DB FILES
 const { getUserByEmail, createNewUser } = require("./db/usersdb");
 
 const app = express();
@@ -17,10 +18,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
+//generates a JWT token with username and token secret
 function generateAccessToken(username) {
   return jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: "1800s" });
 }
 
+//authenticates the token when post/get requires it
 function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
@@ -48,6 +51,7 @@ app.get("*", (req, res) => {
     message: "No route found for the requested URL",
   });
 });
+
 /**
  * Endpoint /api/users/register
  */
