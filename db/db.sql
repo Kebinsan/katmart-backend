@@ -13,6 +13,15 @@ CREATE TABLE users (
     UNIQUE(email)
 );
 
+CREATE TABLE products (
+    prod_id BIGSERIAL PRIMARY KEY NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    category VARCHAR(255) NOT NULL,
+    price decimal(12,2) NOT NULL,
+    rating jsonb NOT NULL DEFAULT '{"rate": 0, "count": 0 }'::jsonb,
+    image varchar(255),
+    description VARCHAR
+);
 -- --Updates updated_at timestamp when called
 -- CREATE FUNCTION update_updated_at_user_task()
 -- RETURNS TRIGGER AS $$

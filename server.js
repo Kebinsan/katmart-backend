@@ -7,6 +7,7 @@ const cors = require("cors");
 
 //DB FILES
 const { getUserByEmail, createNewUser } = require("./db/usersdb");
+const { getAllProducts } = require("./db/productsdb");
 
 const app = express();
 
@@ -45,11 +46,14 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.get("*", (req, res) => {
-  res.status(404).send({
-    error: "404 - Not Found",
-    message: "No route found for the requested URL",
-  });
+app.get("/products", async (req, res) => {
+  try {
+    const products = await getAllProducts();
+    console.log(products);
+    res.send(products);
+  } catch (err) {
+    throw err;
+  }
 });
 
 /**
